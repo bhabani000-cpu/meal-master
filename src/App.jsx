@@ -26,14 +26,26 @@ function App() {
   useEffect(() => {
     const fetchInitialMeals = async () => {
       try {
-        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=`);
-        const data = await response.json();
+        // Fetch recipes for specific popular categories so expected data always appears
+        const queries = ['chicken', 'beef', 'paneer', 'seafood', 'salad']; // Targets explicit recipes
+        const promises = queries.map(q => 
+          fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${q}`).then(res => res.json())
+        );
         
-        if (data.meals) {
-          setMeals(data.meals);
-        } else {
-          setMeals([]);
-        }
+        const results = await Promise.all(promises);
+        
+        // Combine meals from all queries
+        let allMeals = [];
+        results.forEach(data => {
+          if (data.meals) {
+            allMeals = [...allMeals, ...data.meals];
+          }
+        });
+
+        // Deduplicate recipes by idMeal so there are no duplicates
+        const uniqueMeals = Array.from(new Map(allMeals.map(meal => [meal.idMeal, meal])).values());
+        
+        setMeals(uniqueMeals);
       } catch (error) {
         console.error("Failed to fetch meals:", error);
       }
