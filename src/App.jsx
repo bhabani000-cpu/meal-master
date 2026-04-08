@@ -2,18 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
-  // --- 1. State Management ---
-  // API Fetch State
   const [meals, setMeals] = useState([]);
-  
-  // Local Interactive States (for array operations)
   const [localSearch, setLocalSearch] = useState('');
   const [sortOrder, setSortOrder] = useState('none');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [favorites, setFavorites] = useState([]);
   const [isDarkMode, setIsDarkMode] = useState(false);
-
-  // --- 2. Dark Mode Implementation ---
   useEffect(() => {
     if (isDarkMode) {
       document.body.classList.add('dark-mode');
@@ -21,8 +15,6 @@ function App() {
       document.body.classList.remove('dark-mode');
     }
   }, [isDarkMode]);
-
-  // --- 3. API Fetching on Mount ---
   useEffect(() => {
     const fetchInitialMeals = async () => {
       try {
@@ -53,15 +45,10 @@ function App() {
 
     fetchInitialMeals();
   }, []);
-
-  // --- 4. Button Interactions ---
-  // Toggle favorites using higher-order array methods (filter)
   const toggleFavorite = (mealId) => {
     if (favorites.includes(mealId)) {
-      // Remove via .filter()
       setFavorites(favorites.filter(id => id !== mealId));
     } else {
-      // Add via spread
       setFavorites([...favorites, mealId]);
     }
   };
