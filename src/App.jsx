@@ -18,7 +18,6 @@ function App() {
   useEffect(() => {
     const fetchInitialMeals = async () => {
       try {
-        // Fetch recipes for specific popular categories so expected data always appears
         const queries = ['chicken', 'beef', 'paneer', 'seafood', 'salad']; // Targets explicit recipes
         const promises = queries.map(q => 
           fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${q}`).then(res => res.json())
