@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 function Home() {
@@ -251,13 +250,13 @@ function Home() {
           
           return (
             <div key={meal.idMeal} className="meal-card">
-              <Link to={'/recipe/' + meal.idMeal}>
+              <a href={'/recipe/' + meal.idMeal}>
                 <img src={meal.strMealThumb} alt={meal.strMeal} loading="lazy" />
-              </Link>
+              </a>
               <div className="meal-card-content">
-                <Link to={'/recipe/' + meal.idMeal}>
+                <a href={'/recipe/' + meal.idMeal}>
                   <h3>{meal.strMeal}</h3>
-                </Link>
+                </a>
                 <div className="meal-card-actions">
                   <button 
                     className="fav-btn"
